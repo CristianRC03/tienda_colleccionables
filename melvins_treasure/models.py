@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class CustomUser(AbstractUser):
     cp = models.CharField(max_length=10)
@@ -9,7 +9,8 @@ class CustomUser(AbstractUser):
     estado = models.CharField(max_length=255)
     pais = models.CharField(max_length=255)
     foto_identificacion = models.CharField(max_length=255)
-    rol = models.ManyToManyField(Group)
+    roles = models.ManyToManyField(Group, related_name='usuarios_roles')
+    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_permissions')
     
 class Producto(models.Model):
     nombre = models.CharField(max_length=255)
